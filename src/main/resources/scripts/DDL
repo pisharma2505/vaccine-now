@@ -1,0 +1,47 @@
+-- Table: public.branch
+
+-- DROP TABLE public.branch;
+
+CREATE SEQUENCE branch_id_seq START 101;
+
+CREATE TABLE public.branch
+(
+    id integer NOT NULL DEFAULT nextval('branch_id_seq'),
+    branch_name character varying(24) COLLATE pg_catalog."default" NOT NULL,
+    branch_location character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    vaccine_count numeric  Default 0,
+    CONSTRAINT branch_pkey PRIMARY KEY (id),
+    CONSTRAINT branch_branch_name_branch_location_key UNIQUE (branch_name,branch_location)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.branch
+    OWNER to postgres;
+
+
+ALTER TABLE public.branch
+ADD COLUMN time_availability_for_vaccine timestamp DEFAULT NULL;
+
+-- Table: public.schedule_vaccine
+
+-- DROP TABLE public.schedule_vaccine;
+-- DROP SEQUENCE schedule_id_seq
+
+CREATE SEQUENCE schedule_id_seq START 101;
+
+CREATE TABLE public.schedule_vaccine
+(
+    id integer NOT NULL DEFAULT nextval('schedule_id_seq'),
+	user_id integer NOT NULL ,
+    branch_id integer NOT NULL,
+    time_slot timestamp NOT NULL,
+	payment_mode varchar(50)  COLLATE pg_catalog."default" NOT NULL,
+	notified char(1) COLLATE pg_catalog."default" ,
+    CONSTRAINT schedule_vaccine_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.schedule_vaccine
+    OWNER to postgres;	
