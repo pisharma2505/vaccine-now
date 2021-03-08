@@ -11,12 +11,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Data;
+
 /**
  * @author pisharma
  *
  */
 
 @Entity
+@Data
 public class Branch {
 	
 	@Id
@@ -35,48 +38,6 @@ public class Branch {
 	@Column(name= "TIME_AVAILABILITY_FOR_VACCINE")
 	private Date timeAvailabilityForVaccine;
 
-	public Branch() {
-		super();
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getBranchName() {
-		return branchName;
-	}
-
-	public void setBranchName(String branchName) {
-		this.branchName = branchName;
-	}
-
-	public String getBranchLocation() {
-		return branchLocation;
-	}
-
-	public void setBranchLocation(String branchLocation) {
-		this.branchLocation = branchLocation;
-	}
-
-	public Integer getVaccineCount() {
-		return vaccineCount;
-	}
-
-	public void setVaccineCount(Integer vaccineCount) {
-		this.vaccineCount = vaccineCount;
-	}
-
-	public Date getTimeAvailabilityForVaccine() {
-		return timeAvailabilityForVaccine;
-	}
-
-	public void setTimeAvailabilityForVaccine(Date timeAvailabilityForVaccine) {
-		this.timeAvailabilityForVaccine = timeAvailabilityForVaccine;
-	}
+	
 
 }

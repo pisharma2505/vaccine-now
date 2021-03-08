@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
-import com.example.demo.model.BranchDTO;
-import com.example.demo.model.TimeAvailabilityDTO;
-import com.example.demo.model.VaccineDTO;
 import com.example.demo.model.VaccineRequest;
+import com.example.demo.response.Response;
+import com.example.demo.response.VaccineResponse;
 import com.example.demo.service.AvailabilityService;
 
 /**
@@ -32,34 +31,59 @@ public class AvailabilityRestCotroller {
 	private AvailabilityService availabilityService;
 
 	@GetMapping("/branches")
-	public @ResponseBody BranchDTO getAllBranches() {
-		return availabilityService.getAllBranches();
+	public ResponseEntity<VaccineResponse> getAllBranches() {
+		try {
+			VaccineResponse response = availabilityService.getAllBranches();
+			return new ResponseEntity<VaccineResponse>(response, HttpStatus.OK);
+		}catch(Exception exception) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Branches not found.", exception.getCause());
+		}
+		
 	}
 
 	@GetMapping("/branch/vaccines")
-	public @ResponseBody VaccineDTO getAvailableVaccinesWithBranch() {
-		return availabilityService.getAvailableVaccinesWithBranch();
+	public ResponseEntity<VaccineResponse> getAvailableVaccinesWithBranch() {
+		try {
+			VaccineResponse response = availabilityService.getAvailableVaccinesWithBranch();
+			return new ResponseEntity<VaccineResponse>(response, HttpStatus.OK);
+		}catch(Exception exception) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Available vaccines not found.", exception.getCause());
+		}
+		
 	}
 
 	@GetMapping("/branch/{branchId}/vaccines")
-	public @ResponseBody VaccineDTO getAvailableVaccinesForBranch(@PathVariable("branchId") Integer branchId) {
-		return availabilityService.getAvailableVaccinesForBranch(branchId);
+	public ResponseEntity<VaccineResponse> getAvailableVaccinesForBranch(@PathVariable("branchId") Integer branchId) {
+		try {
+			VaccineResponse response = availabilityService.getAvailableVaccinesForBranch(branchId);
+			return new ResponseEntity<VaccineResponse>(response, HttpStatus.OK);
+		}catch(Exception exception) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Available vaccines for branch id : "+branchId+" not found.", exception.getCause());
+		}
+		
 	}
 
 	@GetMapping("/branch/{branchId}/availability")
-	public @ResponseBody TimeAvailabilityDTO getTimeAvailableForBranch(@PathVariable("branchId") Integer branchId) {
-		return availabilityService.getTimeAvailableForBranch(branchId);
+	public ResponseEntity<VaccineResponse> getTimeAvailableForBranch(@PathVariable("branchId") Integer branchId) {
+		try {
+			VaccineResponse response = availabilityService.getTimeAvailableForBranch(branchId);
+			return  new ResponseEntity<VaccineResponse>(response, HttpStatus.OK);
+		}catch(Exception exception) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Availability for branch id"+branchId+"not found.",exception.getCause());
+		}
+		
 	}
 
 	@PostMapping("/schedule/vaccine")
-	public ResponseEntity<String> scheduleVaccinationForUserWithAvailableTimeSlot(
+	public ResponseEntity<Response> scheduleVaccinationForUserWithAvailableTimeSlot(
 			@RequestBody VaccineRequest vaccineRequest) {
-		boolean isSheduled = availabilityService.scheduleVaccination(vaccineRequest);
-		if (isSheduled) {
-			return new ResponseEntity<>("Vaccine Scheduled is successful", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
+		try {
+			Response response = availabilityService.scheduleVaccination(vaccineRequest);
+			return new ResponseEntity<Response>(response, HttpStatus.OK);
+		}catch(Exception exception) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Schedule couldn't done.",exception.getCause());
 		}
+		
 	}
 
 }

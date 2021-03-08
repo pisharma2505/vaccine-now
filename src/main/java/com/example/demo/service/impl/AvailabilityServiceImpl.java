@@ -3,6 +3,8 @@
  */
 package com.example.demo.service.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,8 @@ import com.example.demo.model.VaccineDTO;
 import com.example.demo.model.VaccineRequest;
 import com.example.demo.repository.BranchRepository;
 import com.example.demo.repository.VaccineSchedularRepository;
+import com.example.demo.response.Response;
+import com.example.demo.response.VaccineResponse;
 import com.example.demo.service.AvailabilityService;
 import com.example.demo.service.NotificationService;
 
@@ -39,7 +43,8 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 	NotificationService notificationService;
 
 	@Override
-	public BranchDTO getAllBranches() {
+	public BranchDTO getAllBranches() throws Exception{
+		
 		List<com.example.demo.entity.Branch> branches = branchRepository.findAll();
 		BranchDTO model = null;
 		if(!branches.isEmpty()) {
@@ -53,9 +58,9 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 		}
 		return model;
 	}
-
+		
 	@Override
-	public VaccineDTO getAvailableVaccinesWithBranch() {
+	public VaccineDTO getAvailableVaccinesWithBranch() throws Exception{
 		List<com.example.demo.entity.Branch> branches = branchRepository.findAll();
 		VaccineDTO model = null;
 		if(!branches.isEmpty()) {
@@ -71,34 +76,66 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 	}
 
 	@Override
-	public VaccineDTO getAvailableVaccinesForBranch(Integer branchId) {
+	public VaccineResponse getAvailableVaccinesForBranch(Integer branchId) throws Exception{
+		Response response = new Response();
+		if(branchId == null || "".equals(branchId)) {
+			response.setMessage("Invalid Branch Id");
+			return response;
+		}
 		Optional<com.example.demo.entity.Branch> entity = branchRepository.findById(branchId);
-		VaccineDTO model = null;
+		VaccineDTO vaccineResponse = null;
 		if(entity.isPresent()) {
-			model = new VaccineDTO();
+			vaccineResponse = new VaccineDTO();
 				Vaccine element = new Vaccine();
 				element.setAvailibilityInBranch(entity.get().getVaccineCount());
 				element.setBranch(entity.get().getBranchName() + "," + entity.get().getBranchLocation());
-				model.getVaccineAvailability().add(element);
+				vaccineResponse.getVaccineAvailability().add(element);
+				return vaccineResponse;
 		}
-		return model;
+		response.setMessage("Branch doesn't exists.");
+		return response;
 	}
 
 	@Override
-	public TimeAvailabilityDTO getTimeAvailableForBranch(Integer branchId) {
+	public  VaccineResponse getTimeAvailableForBranch(Integer branchId) throws Exception{
+		Response response = new Response();
+		if(branchId == null || "".equals(branchId)) {
+			response.setMessage("Invalid Branch Id");
+			return response;
+		}
 		Optional<com.example.demo.entity.Branch> entity = branchRepository.findById(branchId);
-		TimeAvailabilityDTO model = null;
+		TimeAvailabilityDTO vaccineResponse = null;
 		if(entity.isPresent()) {
-			model = new TimeAvailabilityDTO();
-				model.setAvailibilityInBranch(entity.get().getTimeAvailabilityForVaccine());
-				model.setBranch(entity.get().getBranchName() + "," + entity.get().getBranchLocation());
+			vaccineResponse = new TimeAvailabilityDTO();
+		    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		    vaccineResponse.setAvailibilityInBranch(dateFormat.format(entity.get().getTimeAvailabilityForVaccine().getTime()));
+		    vaccineResponse.setBranch(entity.get().getBranchName() + "," + entity.get().getBranchLocation());
+			return  vaccineResponse;
+		}else {
+			response.setMessage("Branch doesn't exists.");
+			return response;
 		}
-		return model;
+		
 	}
 
 	@Override
-	public boolean scheduleVaccination(VaccineRequest vaccineRequest) {
+	public Response scheduleVaccination(VaccineRequest vaccineRequest) throws Exception{
+		Response response = new Response();
+		if(vaccineRequest.getBranchId() == null) {
+			response.setMessage("Invalid Branch Id");
+			return response;
+		}else if(vaccineRequest.getPaymentMode() == null){
+			response.setMessage("Please provide valid payment model.");
+			return response;
+		}else if(vaccineRequest.getUserID() == null){
+			response.setMessage("Please provide valid userId.");
+			return response;
+		}else if(vaccineRequest.getTimeSlot() == null){
+			response.setMessage("Please provide valid time slot.");
+			return response;
+		}
 		Optional<com.example.demo.entity.Branch> entity = branchRepository.findById(vaccineRequest.getBranchId());
+		
 		if(entity.isPresent()) {
 			long differenceInDuration = vaccineRequest.getTimeSlot().getTime() - entity.get().getTimeAvailabilityForVaccine().getTime(); 
 			long difference_In_Minutes = (differenceInDuration/(1000 * 60))% 60; 
@@ -111,13 +148,16 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 				scheduleVaccine.setNotified("Y");
 				vaccineSchedularRepository.saveAndFlush(scheduleVaccine);
 				notificationService.triggerNotification();
-				return true;	
+				response.setMessage("Vaccine Scheduled is successful.Please check email for further details.");
+				return response;	
 				
 			}else {
-				return false;
+				response.setMessage("Time slot doesn't exists.");
+				return response;
 			}
 		}
-		return false;
+		response.setMessage("Branch doesn't exists.");
+		return response;
 	}
 	
 

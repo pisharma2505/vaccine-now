@@ -8,11 +8,14 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
+import lombok.Data;
+
 /**
  * @author pisharma
  *
  */
 @Component
+@Data
 public class VaccineRequest implements Serializable{
 	
 	/**
@@ -28,47 +31,4 @@ public class VaccineRequest implements Serializable{
 	
 	private String paymentMode;
 	
-	public VaccineRequest() {
-		
-	}
-
-	public Integer getUserID() {
-		return userID;
-	}
-
-	public void setUserID(Integer userID) {
-		this.userID = userID;
-	}
-
-	public Integer getBranchId() {
-		return branchId;
-	}
-
-	public void setBranchId(Integer branchId) {
-		this.branchId = branchId;
-	}
-
-	public Date getTimeSlot() {
-		return timeSlot;
-	}
-
-	public void setTimeSlot(Date timeSlot) {
-		this.timeSlot = timeSlot;
-	}
-
-	public String getPaymentMode() {
-		return paymentMode;
-	}
-
-	public void setPaymentMode(String paymentMode) {
-		this.paymentMode = paymentMode;
-	}
-
-	
-
-	
-
-	
-	
-
 }

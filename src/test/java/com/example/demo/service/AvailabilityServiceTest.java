@@ -47,7 +47,7 @@ class AvailabilityServiceTest {
     }
 	
 	@Test
-	public void getAllBranchesSuccessfully() {
+	public void getAllBranchesSuccessfully() throws Exception{
 		Branch branch1 = new Branch();
 		branch1.setBranchLocation("New Delhi");
 		branch1.setBranchName("Covid Vaccine Booth");
@@ -83,7 +83,7 @@ class AvailabilityServiceTest {
 	}
 	
 	@Test
-	public void getAllBranchesWithEmptyResultSuccessfully() {
+	public void getAllBranchesWithEmptyResultSuccessfully() throws Exception{
 		
 		Mockito.when(branchRepository.findAll()).thenReturn(Collections.EMPTY_LIST);
 		
@@ -94,7 +94,7 @@ class AvailabilityServiceTest {
 	}
 	
 	@Test(expected = DataAccessResourceFailureException.class)
-	public void getAllBranchesWithDBException() {
+	public void getAllBranchesWithDBException() throws Exception{
 		
 		Mockito.when(branchRepository.findAll()).thenThrow(new DataAccessResourceFailureException("Couldn't connect To Database"));
 		
@@ -104,7 +104,7 @@ class AvailabilityServiceTest {
 	
 	
 	@Test
-	public void getAvailableVaccinesWithBranchSuccessfully() {
+	public void getAvailableVaccinesWithBranchSuccessfully() throws Exception{
 		Branch branch1 = new Branch();
 		branch1.setBranchLocation("New Delhi");
 		branch1.setBranchName("Covid Vaccine Booth");

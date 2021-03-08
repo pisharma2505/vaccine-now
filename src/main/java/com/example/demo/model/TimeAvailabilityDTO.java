@@ -4,16 +4,17 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import org.springframework.stereotype.Component;
+import com.example.demo.response.VaccineResponse;
+
+import lombok.Data;
 
 /**
  * @author pisharma
  *
  */
-@Component
-public class TimeAvailabilityDTO implements Serializable {
+@Data
+public class TimeAvailabilityDTO implements Serializable, VaccineResponse {
 
 	/**
 	 * 
@@ -22,22 +23,8 @@ public class TimeAvailabilityDTO implements Serializable {
 
 	private String branch;
 
-	private Date availibilityInBranch;
+	private String availibilityInBranch;
 
-	public String getBranch() {
-		return branch;
-	}
-
-	public void setBranch(String branch) {
-		this.branch = branch;
-	}
-
-	public Date getAvailibilityInBranch() {
-		return availibilityInBranch;
-	}
-
-	public void setAvailibilityInBranch(Date availibilityInBranch) {
-		this.availibilityInBranch = availibilityInBranch;
-	}
+	
 
 }

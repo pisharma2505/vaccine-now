@@ -6,14 +6,16 @@ package com.example.demo.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import com.example.demo.response.VaccineResponse;
+
+import lombok.Data;
 
 /**
  * @author pisharma
  *
  */
-@Component
-public class VaccineDTO {
+@Data
+public class VaccineDTO implements VaccineResponse{
 	
 	
 	List<Vaccine> vaccineAvailability;
@@ -22,13 +24,7 @@ public class VaccineDTO {
 		this.vaccineAvailability = new ArrayList<>();
 	}
 
-	public List<Vaccine> getVaccineAvailability() {
-		return vaccineAvailability;
-	}
-
-	public void setVaccineAvailability(List<Vaccine> vaccineAvailability) {
-		this.vaccineAvailability = vaccineAvailability;
-	}
+	
 
 
 }

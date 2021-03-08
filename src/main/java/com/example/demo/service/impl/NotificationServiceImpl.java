@@ -24,7 +24,7 @@ public class NotificationServiceImpl implements NotificationService {
 
 	@Override
 	public void triggerNotification() {
-		sendSimpleMessage("abc@gmail.com", "Time Slot Booked For Vaccination", "Hello");
+		sendSimpleMessage("nomail@gmail.com", "Time Slot Booked For Vaccination", "Hello");
 
 	}
 

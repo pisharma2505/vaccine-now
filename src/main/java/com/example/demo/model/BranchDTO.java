@@ -7,11 +7,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.demo.response.VaccineResponse;
+
+import lombok.Data;
+
 /**
  * @author pisharma
  *
  */
-public class BranchDTO implements Serializable {
+@Data
+public class BranchDTO implements Serializable, VaccineResponse {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -20,15 +25,5 @@ public class BranchDTO implements Serializable {
 	public BranchDTO() {
 		this.branches = new ArrayList<>();
 	}
-
-	public List<Branch> getBranches() {
-		return branches;
-	}
-
-	public void setBranches(List<Branch> branches) {
-		this.branches = branches;
-	}
 	
-	
-
 }

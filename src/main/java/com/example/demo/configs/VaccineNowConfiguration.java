@@ -23,8 +23,8 @@ public class VaccineNowConfiguration {
 		mailSender.setHost("smtp.gmail.com");
 		mailSender.setPort(25);
 
-		mailSender.setUsername("username");
-		mailSender.setPassword("password");
+		mailSender.setUsername("nomail@gmail.com");
+		mailSender.setPassword("blank");
 
 		Properties props = mailSender.getJavaMailProperties();
 		props.put("mail.transport.protocol", "smtp");
