@@ -30,8 +30,8 @@ Project is created with:
 
 * [API Documentation](https://documenter.getpostman.com/view/12462719/Tz5nceJa)
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/620c1e711bd096b44568)
+* Postman Collection link -https://www.getpostman.com/collections/620c1e711bd096b44568
 
 ## ER Diagram
 
-![alt text](https://github.com/pisharma2505/vaccine-now/blob/60ba1506b3aa968484f3eb683a82b40ab034bdbf/src/main/resources/ERDiagram/ERDiagram.pdf)
+![alt text](https://github.com/pisharma2505/vaccine-now/blob/60ba1506b3aa968484f3eb683a82b40ab034bdbf/src/main/resources/ERDiagram/ERDiagram.png)
