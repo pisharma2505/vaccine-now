@@ -34,4 +34,4 @@ Project is created with:
 
 ## ER Diagram
 
-![alt text](https://github.com/pisharma2505/vaccine-now/blob/60ba1506b3aa968484f3eb683a82b40ab034bdbf/src/main/resources/ERDiagram/ERDiagram.png)
+![alt text](https://github.com/pisharma2505/vaccine-now/blob/60ba1506b3aa968484f3eb683a82b40ab034bdbf/src/main/resources/ERDiagram/ER_Diagram.png)
