@@ -1,86 +1,37 @@
-# vaccine-now
-Vaccination Now 
+# VaccNow
 
-Below are the APIs created :
+As a cautious action after Covid-19, VaccNow is an healthcare organization managing the process of Covid-19 vaccine to public, so that the VaccNow is planning to build multi their digital channels for consuming a modern API for basic features.This is planned to be API first approach, of well-tested functions and enabling agility of later modifications.
 
-1.getAllBranches() 
-  GET   /vaccine-now/branches
-  Description : This APi returns all the branches with address details 
-  Response Sample :    {
-			    "branches": [
-				{
-				    "name": "Covid Vaccine Booth",
-				    "location": "Patel Nagar Delhi"
-				},
-				{
-				    "name": "Covid Vaccine Booth",
-				    "location": "Nizamuddin Delhi"
-				},
-				{
-				    "name": "Covid Vaccine Booth",
-				    "location": "Sarita Vihar"
-				},
-				{
-				    "name": "Covid Vaccine Booth",
-				    "location": "Ghaziabad"
-				}
-			    ]
-			}
+* ##### Note - Project is built with H2 Memory database and data will be seeded using [data.sql](https://github.com/pisharma2505/vaccine-now/blob/60ba1506b3aa968484f3eb683a82b40ab034bdbf/src/main/resources/data.sql)  on app start.
+* ##### Email will be triggerred to the correponding user post confirmation of slot at to his mail-aadress. Need to add mail address in config file of NotificationserviceImpl.
 
-2. getAvailableVaccinesWithBranch()
-   GET   /vaccine-now/branch/vaccines
-   Description : This API shows the avaialbility of vaccines in each branch
-   Response Sample :   {
-			    "vaccineAvailability": [
-				{
-				    "branch": "Covid Vaccine Booth,Patel Nagar Delhi",
-				    "availibilityInBranch": 0
-				},
-				{
-				    "branch": "Covid Vaccine Booth,Nizamuddin Delhi",
-				    "availibilityInBranch": 10
-				},
-				{
-				    "branch": "Covid Vaccine Booth,Sarita Vihar",
-				    "availibilityInBranch": 5
-				},
-				{
-				    "branch": "Covid Vaccine Booth,Ghaziabad",
-				    "availibilityInBranch": 5
-				}
-			    ]
-			}
+## Table of contents
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [APIs](#apis)
+* [ER Diagram](#erd)
 
-3. getAvailableVaccinesForBranch(@PathVariable("branchId") Integer branchId)
-   GET  /vaccine-now/branch/1/vaccines
-   Description : This API pulls avaialble Vaccines for branch id passed as path param
-   Response sample : {
-			    "vaccineAvailability": [
-				{
-				    "branch": "Covid Vaccine Booth,Patel Nagar Delhi",
-				    "availibilityInBranch": 0
-				}
-			    ]
-			}
 
-4. getTimeAvailableForBranch(@PathVariable("branchId") Integer branchId)
-   GET /vaccine-now/branch/1/availability
-   Description: This API shows time availabiluity for vaccine for specific branch passed as param
-   Response sample : {
-			    "branch": "Covid Vaccine Booth,Nizamuddin Delhi",
-			    "availibilityInBranch": "2021-03-28T18:30:00.000+00:00"
-			} 
+## Technologies
 
-5. scheduleVaccinationForUserWithAvailableTimeSlot(@RequestBody VaccineRequest vaccineRequest)
-   POST /vaccine-now/schedule/vaccine
-   {
-    "userID": "1",
-    "branchId": "1",
-    "timeSlot": "2021-03-15",
-    "paymentMode": "Cash"
-   }
+Project is created with:
+* Java: 8
+* Springboot: 2.4.3
+* H2 Database
+* JUnit5
 
-   Description : This API books time slot for above request sample with time bandwidth of 15 mins. Notification is also send to respective user
-                 regarding confired time slot. If any exception is encountered then response is Internal Server Error.
+## Setup
+* Import the project as maven project
+* Go to project root folder and use **DemoApplication**  with right click to run as SpringBoot App
+* Application will run on port number 7070 
+* H2 console link -http://localhost:7070/h2  with username : sa and password : password
 
-   Response Sample :    200 OK  Vaccine Scheduled is successful
+## APIs
+
+* [API Documentation](https://documenter.getpostman.com/view/12462719/Tz5nceJa)
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/620c1e711bd096b44568)
+
+## ER Diagram
+
+![alt text](https://github.com/pisharma2505/vaccine-now/blob/60ba1506b3aa968484f3eb683a82b40ab034bdbf/src/main/resources/ERDiagram/ERDiagram.pdf)
